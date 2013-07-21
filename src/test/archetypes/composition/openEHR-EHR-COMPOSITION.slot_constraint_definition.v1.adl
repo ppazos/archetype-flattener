@@ -1,0 +1,63 @@
+archetype (adl_version=1.4)
+	openEHR-EHR-COMPOSITION.slot_constraint_definition.v1
+
+concept
+	[at0000]	-- Slot constraint definition
+language
+	original_language = <[ISO_639-1::es]>
+description
+	original_author = <
+		["name"] = <"">
+	>
+	details = <
+		["es"] = <
+			language = <[ISO_639-1::es]>
+			purpose = <"slot constraint definition">
+			use = <"slot constraint definition">
+			misuse = <"slot constraint definition">
+			copyright = <"">
+		>
+	>
+	lifecycle_state = <"0">
+	other_contributors = <>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"3C3D5EDBFCB6F623D8ABE3F4243F3FE3">
+	>
+
+definition
+	COMPOSITION[at0000] matches {	-- Slot constraint definition
+		category matches {
+			DV_CODED_TEXT matches {
+				defining_code matches {[openehr::433]}
+			}
+		}
+		context matches {
+			EVENT_CONTEXT matches {
+				other_context matches {
+					ITEM_TREE[at0001] matches {*}
+				}
+			}
+		}
+		content cardinality matches {0..*; unordered} matches {
+			allow_archetype OBSERVATION occurrences matches {0..*} matches {
+				include
+					archetype_id/value matches {/openEHR-EHR-OBSERVATION\.constraint_definition\.v1/}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["es"] = <
+			items = <
+				["at0000"] = <
+					text = <"Slot constraint definition">
+					description = <"unknown">
+				>
+				["at0001"] = <
+					text = <"Arbol">
+					description = <"@ internal @">
+				>
+			>
+		>
+	>

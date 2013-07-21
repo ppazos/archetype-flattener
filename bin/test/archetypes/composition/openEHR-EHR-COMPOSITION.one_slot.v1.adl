@@ -1,0 +1,67 @@
+archetype (adl_version=1.4)
+	openEHR-EHR-COMPOSITION.one_slot.v1
+
+concept
+	[at0000]	-- One slot
+language
+	original_language = <[ISO_639-1::es]>
+description
+	original_author = <
+		["name"] = <"">
+	>
+	details = <
+		["es"] = <
+			language = <[ISO_639-1::es]>
+			purpose = <"test slot">
+			use = <"test slot">
+			misuse = <"test slot">
+			copyright = <"">
+		>
+	>
+	lifecycle_state = <"0">
+	other_contributors = <>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"2F5EB12AE9FDC9D27B655C9145818818">
+	>
+
+definition
+	COMPOSITION[at0000] matches {	-- One slot
+		category matches {
+			DV_CODED_TEXT matches {
+				defining_code matches {[openehr::433]}
+			}
+		}
+		context matches {
+			EVENT_CONTEXT matches {
+				other_context matches {
+					ITEM_TREE[at0001] matches {*}
+				}
+			}
+		}
+		content cardinality matches {0..*; unordered} matches {
+			allow_archetype INSTRUCTION[at0002] occurrences matches {0..*} matches {	-- INSTRUCTION
+				include
+					archetype_id/value matches {/openEHR-EHR-INSTRUCTION\.test_ordenes\.v1/}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["es"] = <
+			items = <
+				["at0000"] = <
+					text = <"One slot">
+					description = <"unknown">
+				>
+				["at0001"] = <
+					text = <"Arbol">
+					description = <"@ internal @">
+				>
+				["at0002"] = <
+					text = <"INSTRUCTION">
+					description = <"*">
+				>
+			>
+		>
+	>

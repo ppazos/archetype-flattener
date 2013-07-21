@@ -1,0 +1,96 @@
+archetype (adl_version=1.4)
+	openEHR-EHR-OBSERVATION.constraint_definition.v1
+
+concept
+	[at0000]	-- Constraint definition
+language
+	original_language = <[ISO_639-1::es]>
+description
+	original_author = <
+		["name"] = <"">
+	>
+	details = <
+		["es"] = <
+			language = <[ISO_639-1::es]>
+			purpose = <"Constraint definition">
+			use = <"Constraint definition">
+			misuse = <"Constraint definition">
+			copyright = <"">
+		>
+	>
+	lifecycle_state = <"0">
+	other_contributors = <>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"6862EDB4A6E20A6CCC0E6B30047A4C74">
+	>
+
+definition
+	OBSERVATION[at0000] matches {	-- Constraint definition
+		data matches {
+			HISTORY[at0001] matches {	-- Event Series
+				events cardinality matches {1..*; unordered} matches {
+					EVENT[at0002] occurrences matches {0..1} matches {	-- Cualquier evento
+						data matches {
+							ITEM_TREE[at0003] matches {	-- Arbol
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0004] occurrences matches {0..1} matches {	-- Texto con constraint definition
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {[ac0001]}		-- Nueva restricción
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	terminologies_available = <"CCPSS99", ...>
+	term_definitions = <
+		["es"] = <
+			items = <
+				["at0000"] = <
+					text = <"Constraint definition">
+					description = <"unknown">
+				>
+				["at0001"] = <
+					text = <"Event Series">
+					description = <"@ internal @">
+				>
+				["at0002"] = <
+					text = <"Cualquier evento">
+					description = <"*">
+				>
+				["at0003"] = <
+					text = <"Arbol">
+					description = <"@ internal @">
+				>
+				["at0004"] = <
+					text = <"Texto con constraint definition">
+					description = <"*">
+				>
+			>
+		>
+	>
+	constraint_definitions = <
+		["es"] = <
+			items = <
+				["ac0001"] = <
+					text = <"Nueva restricción">
+					description = <"Descripcion">
+				>
+			>
+		>
+	>
+	constraint_bindings = <
+		["CCPSS99"] = <
+			items = <
+				["ac0001"] = <terminology:CCPSS99/1?subset=all>
+			>
+		>
+	>
