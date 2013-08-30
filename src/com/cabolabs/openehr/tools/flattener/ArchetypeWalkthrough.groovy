@@ -8,6 +8,7 @@ import org.openehr.am.archetype.constraintmodel.ArchetypeSlot;
 import org.openehr.am.archetype.constraintmodel.CAttribute;
 import org.openehr.am.archetype.constraintmodel.CComplexObject;
 import org.openehr.am.archetype.constraintmodel.CDomainType;
+import org.openehr.am.archetype.constraintmodel.CObject
 import org.openehr.am.archetype.constraintmodel.CPrimitiveObject;
 import org.openehr.am.archetype.constraintmodel.CSingleAttribute
 import org.openehr.am.archetype.constraintmodel.ConstraintRef;
@@ -20,6 +21,8 @@ import org.openehr.am.archetype.ontology.OntologyBindingItem
 import org.openehr.am.archetype.ontology.OntologyDefinitions
 import org.openehr.am.archetype.ontology.TermBindingItem
 import org.openehr.am.openehrprofile.datatypes.quantity.CDvOrdinal
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.If;
 
 public class ArchetypeWalkthrough {
 
@@ -126,6 +129,9 @@ public class ArchetypeWalkthrough {
       this.codeMapping = new ArchetypeCodes(root.archetypeId.value)
    }
    
+   /**
+    * Comienza recorrida de raiz a hojas.
+    */
    public void start()
    {
       // walkthrough definition
@@ -134,6 +140,7 @@ public class ArchetypeWalkthrough {
       // walkthrough ontology
       wt(this.root.ontology, null, this.root)
       
+      // debug
       println "---------------------------------------"
       println "----------  CODE MAPPING  -------------"
       println "---------------------------------------"
@@ -423,5 +430,44 @@ public class ArchetypeWalkthrough {
             action(c, archetype, this, parent)
          }
       }
+   }
+   
+   /**
+    * Metodos auxiliares para recorrer desed nodos hijos a nodos padres.
+    */
+   def parent(CObject co)
+   {
+      // la path del co es /a[atNNNN]/b[atNNNN], puede ser /
+      if (co.path() == "/") return null
+      
+      // FIXME: si co no tienen nodeID su ruta es igual a la de su parent. Y no se que va a devolver
+      //        el archetype.node con esta path, el mismo CObject o el padre CAttribute.
+      
+      // quiero la path al atibuto padre, tengo que sacar el nodeId de la path del co
+      if (!co.nodeID) throw new Exception("CObject no tiene nodeID "+ co.toString()) 
+      
+      String parentPath = co.path() - "["+ co.nodeID +"]" // path al CAttribute padre
+      return this.root.node(parentPath)
+      
+      /* esto era para sacarle la ultima parte a la path pero da la path a otro CObject, el abuelo.
+      def parts = co.path().split("/") // tiene por lo menos 2 elementos ej. /a[atNNNN].split = /, a[atNNNN]
+      
+      // si tiene 2 elementos, el padre es root.
+      // se verifica aqui porque el join sacandole el ultimo elemento da "" en lugar de "/"
+      if (parts.size() == 2) return this.root.node("/")
+      
+      // saca el ultimo elemento de la lista ej. b[atNNNN]
+      // y une los restantes concatenandolos usando /, lo que deja una path valida
+      parts[0..parts.size()-2].join("/")
+      */
+      
+   }
+   
+   def parent(CAttribute ca)
+   {
+      // la path de ca termina en el nombre del atributo /a[atNNNN]/b[atNNNN]/c
+      // ca ya tiene el metodo que le saca el nombre del atributo del propio ca a la path
+      String parentPath = ca.parentNodePath()
+      return this.root.node(parentPath)
    }
 }
