@@ -4,14 +4,14 @@ package com.cabolabs.openehr.tools.flattener;
 
 import org.openehr.am.archetype.Archetype
 import org.openehr.am.archetype.constraintmodel.ArchetypeInternalRef
-import org.openehr.am.archetype.constraintmodel.ArchetypeSlot;
-import org.openehr.am.archetype.constraintmodel.CAttribute;
-import org.openehr.am.archetype.constraintmodel.CComplexObject;
-import org.openehr.am.archetype.constraintmodel.CDomainType;
+import org.openehr.am.archetype.constraintmodel.ArchetypeSlot
+import org.openehr.am.archetype.constraintmodel.CAttribute
+import org.openehr.am.archetype.constraintmodel.CComplexObject
+import org.openehr.am.archetype.constraintmodel.CDomainType
 import org.openehr.am.archetype.constraintmodel.CObject
-import org.openehr.am.archetype.constraintmodel.CPrimitiveObject;
+import org.openehr.am.archetype.constraintmodel.CPrimitiveObject
 import org.openehr.am.archetype.constraintmodel.CSingleAttribute
-import org.openehr.am.archetype.constraintmodel.ConstraintRef;
+import org.openehr.am.archetype.constraintmodel.ConstraintRef
 import org.openehr.am.archetype.constraintmodel.primitive.CPrimitive
 import org.openehr.am.archetype.constraintmodel.primitive.CString
 import org.openehr.am.archetype.ontology.ArchetypeOntology
@@ -21,8 +21,6 @@ import org.openehr.am.archetype.ontology.OntologyBindingItem
 import org.openehr.am.archetype.ontology.OntologyDefinitions
 import org.openehr.am.archetype.ontology.TermBindingItem
 import org.openehr.am.openehrprofile.datatypes.quantity.CDvOrdinal
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.If;
 
 public class ArchetypeWalkthrough {
 
@@ -437,6 +435,9 @@ public class ArchetypeWalkthrough {
     */
    def parent(CObject co)
    {
+      // WARNING: por como esta implementado node(), solo se obtienen CObjects,
+      //          entonces el parent de CObject no puede ser CAttribute.
+      
       // la path del co es /a[atNNNN]/b[atNNNN], puede ser /
       if (co.path() == "/") return null
       
